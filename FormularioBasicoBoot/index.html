@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Form</title>
+
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--
+  <style type="text/css">
+
+    .messages {
+      color: #FA787E;
+    }
+    form.ng-submitted input.ng-invalid{
+      border-color: #FA787E;
+    }
+    form input.ng-invalid.ng-touched {
+      border-color: #FA787E;
+    }
+  /*
+    form input.ng-valid.ng-touched {
+      border-color: #78FA89;
+    }
+  */
+</style> -->
+</head>
+
+<body ng-app="formLabs">
+  <div ng-controller="UserController">
+    <div class="container">
+    <form name="userForm" novalidate>
+      <label for="name">Nombre</label>
+      <input class="form-control" name="name" type="text" ng-model="user.name" ng-model-options="{ updateOn: 'blur' }" required />
+      <span class="messages" ng-show="userForm.$submitted || userForm.name.$touched">
+        <span ng-show="userForm.name.$error.required">El campo es obligatorio.</span>
+      </span>
+
+      <label for="email">Email</label>
+      <input class="form-control" name="email" type="email" ng-model="user.email" ng-model-options="{ updateOn: 'blur' }" required />
+      <span class="messages" ng-show="userForm.$submitted || userForm.email.$touched">
+        <span ng-show="userForm.email.$error.required">El campo es obligatorio.</span>
+        <span ng-show="userForm.email.$error.email">Formato de email incorrecto.</span>
+      </span>
+      <label for="gender">Género</label>
+      <input class="form-control" name="gender" type="radio" ng-model="user.gender" value="male" />Masculino
+      <input class="form-control" name="gender" type="radio" ng-model="user.gender" value="female" />Femenino
+      <br />
+      <label for="age">Edad</label><br />
+      <input class="form-control" name="age" type="number" ng-model="user.age" ng-model-options="{ updateOn: 'blur' }" min="0" max="150" />
+      <span class="messages" ng-show="userForm.$submitted || userForm.age.$touched">
+        <span ng-show="userForm.age.$error.max">La edad no puede exceder de 150.</span>
+      </span>
+
+      <br /><br />
+      <input class="form-control" type="reset" ng-click="reset(userForm)" value="Reset" />
+      <input class="form-control" type="submit" ng-click="update()" value="Save" ng-disabled="userForm.$invalid"/>
+    </form>
+    <pre>user = {{user | json}}</pre>
+  </div>
+
+  <script>
+    angular.module('formLabs', [])
+      .controller('UserController', ['$scope', function($scope) {
+        $scope.user = {};
+
+        $scope.update = function() {
+          console.log($scope.user);
+        };
+
+        $scope.reset = function(form) {
+          $scope.user = {};
+          if (form) {
+            form.$setPristine();
+            form.$setUntouched();
+          }
+        };
+
+        $scope.reset();
+      }]);
+  </script>
+</body>
+
+</html>
