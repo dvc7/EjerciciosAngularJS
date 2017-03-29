@@ -1,4 +1,6 @@
 angular.module("FormularioFinal",[])
-.controller("Validacion",function($scope){
-  $scope.nombre = "amancio";
-});
+.controller("Validacion",['$scope',function($scope){
+  $scope.nombre = "";
+  $scope.correo = "";
+  $scope.numero = "";
+}]);

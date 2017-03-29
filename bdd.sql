@@ -1,8 +1,10 @@
-BEGIN TRANSACTION;
-
 /* Create a table */
-
-
+CREATE TABLE Persons (
+    PersonID integer PRIMARY KEY,
+    LastName text,
+    FirstName text,
+    Age int
+);
 CREATE TABLE Orders (
     OrderID int,
     OrderNumber int,
@@ -11,14 +13,27 @@ CREATE TABLE Orders (
     FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
 );
 
+CREATE TABLE provincia (
+  id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  nombre VARCHAR(50) NOT NULL ,
+  codigo31662 CHAR(4) NOT NULL ,
+  PRIMARY KEY (id) ,
+  UNIQUE INDEX codigo31662_UNIQUE (codigo31662 ASC))
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE Persons (
-    PersonID integer PRIMARY KEY,
-    LastName text,
-    FirstName text,
-    Age int
-);
-
+CREATE TABLE localidad (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  provincia_id TINYINT UNSIGNED NOT NULL ,
+  nombre VARCHAR(50) NOT NULL ,
+  codigopostall SMALLINT(6) NOT NULL ,
+  PRIMARY KEY (id) ,
+  INDEX fk_localidad_provincia_idx (provincia_id ASC) ,
+  CONSTRAINT fk_localidad_provincia
+    FOREIGN KEY (provincia_id )
+    REFERENCES provincia (id )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
 
 /* Create few records in this table */
 INSERT INTO Persons VALUES(1,'Hansen','Ola',30);
